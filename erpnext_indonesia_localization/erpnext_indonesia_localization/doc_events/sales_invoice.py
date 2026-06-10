@@ -251,15 +251,15 @@ def calculate_other_tax_base_amount_and_total(doc, method):
 	if doc.taxes_and_charges:
 		tax_template_doc = frappe.get_value("Sales Taxes and Charges",
 											{"parent": doc.taxes_and_charges, "idx": 1},
-											["use_temporary_rate", "rate", "temporary_rate"],
+											["use_temporary_rate", "rate", "custom_temporary_rate_float"],
 											as_dict=True)
 		doc.total_other_tax_base = 0
 		doc.total_luxury_goods_tax = 0
 
 		if tax_template_doc.use_temporary_rate:
 			for item in doc.items:
-				item.other_tax_base_amount = item.net_amount * tax_template_doc.rate / tax_template_doc.temporary_rate
-				item.vat_amount = item.other_tax_base_amount * tax_template_doc.temporary_rate / 100
+				item.other_tax_base_amount = item.net_amount * tax_template_doc.rate / tax_template_doc.custom_temporary_rate_float
+				item.vat_amount = item.other_tax_base_amount * tax_template_doc.custom_temporary_rate_float / 100
 				doc.total_other_tax_base += item.other_tax_base_amount
 				doc.total_luxury_goods_tax += item.luxury_goods_tax_amount
 		else:

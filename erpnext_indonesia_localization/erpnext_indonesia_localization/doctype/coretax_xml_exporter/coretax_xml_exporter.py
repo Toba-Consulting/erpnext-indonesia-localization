@@ -139,7 +139,8 @@ def fetch_sales_invoices(doc):
 		"is_xml_generated": 0,
 		"company": doc.company,
 		"posting_date": ["between", [doc.start_invoice_date, doc.end_invoice_date]],
-		"taxes_and_charges": ["!=", ""]
+		"taxes_and_charges": ["!=", ""],
+		"custom_is_reimbursement": "No"
 	}
 
 	if doc.branch:
@@ -217,17 +218,18 @@ def mapping_sales_invoices(invoice_docs, company_doc, doc):
 			"Sales Invoice Item",
 			filters={
 				"parent": invoice["name"],
-				"docstatus": 1
+				"docstatus": 1,
 			},
 			fields=["item_name", "item_code", "qty", "uom", "discount_amount", "net_amount",
 					"other_tax_base_amount", "vat_amount", "luxury_goods_tax_rate", "luxury_goods_tax_amount", "unit_ref",
-					"kode_barang_jasa_ref", "kode_barang_jasa_opt", "net_rate"]
+					"kode_barang_jasa_ref", "kode_barang_jasa_opt", "net_rate"],
+   			order_by="idx asc"    
 		)
 
 		for item in si_items:
 			template_tax = frappe.get_value("Sales Taxes and Charges",
 											{"parent": invoice["name"], "idx": 1},
-											["use_temporary_rate", "rate", "temporary_rate"],
+											["use_temporary_rate", "rate", "custom_temporary_rate_float"],
 											as_dict=True)
 
 			invoice_entry["items"].append({
@@ -241,7 +243,7 @@ def mapping_sales_invoices(invoice_docs, company_doc, doc):
 				"tax_base": item["net_amount"],
 				"other_tax_base": item["other_tax_base_amount"],
 				"vat": item["vat_amount"],
-				"vatrate": int(template_tax.temporary_rate if template_tax.use_temporary_rate else template_tax.rate),
+				"vatrate": template_tax.custom_temporary_rate_float if template_tax.use_temporary_rate else template_tax.rate,
 				"stlg_rate": 0.00 if item["luxury_goods_tax_rate"] in ["", None] else item["luxury_goods_tax_rate"],
 				"stlg": 0.00 if item["luxury_goods_tax_amount"] in ["", None] else item["luxury_goods_tax_amount"]
 			})
