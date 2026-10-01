@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_bulk_edit": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2025-02-17 10:16:41.583828",
@@ -17,6 +18,7 @@
   "start_invoice_date",
   "end_invoice_date",
   "section_break_il2vq",
+  "sales_invoice_table",
   "sales_invoice_list",
   "html",
   "amended_from"
@@ -97,12 +99,18 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "sales_invoice_table",
+   "fieldtype": "Table",
+   "label": "Sales Invoice",
+   "options": "Coretax XML SI"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-05 15:18:32.677967",
+ "modified": "2026-08-26 16:12:49.401084",
  "modified_by": "Administrator",
  "module": "Erpnext Indonesia Localization",
  "name": "Coretax XML Exporter",
@@ -148,6 +156,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
