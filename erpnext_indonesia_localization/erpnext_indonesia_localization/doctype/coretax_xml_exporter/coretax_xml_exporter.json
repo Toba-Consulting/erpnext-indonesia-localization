@@ -17,6 +17,7 @@
   "column_break_oyt83",
   "start_invoice_date",
   "end_invoice_date",
+  "created_by",
   "section_break_il2vq",
   "sales_invoice_table",
   "sales_invoice_list",
@@ -105,12 +106,18 @@
    "fieldtype": "Table",
    "label": "Sales Invoice",
    "options": "Coretax XML SI"
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-26 16:12:49.401084",
+ "modified": "2026-10-01 17:15:08.514962",
  "modified_by": "Administrator",
  "module": "Erpnext Indonesia Localization",
  "name": "Coretax XML Exporter",
